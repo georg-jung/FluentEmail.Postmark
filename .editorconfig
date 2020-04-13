@@ -140,7 +140,7 @@ csharp_indent_labels = flush_left
 # Prefer "var" everywhere
 csharp_style_var_for_built_in_types = true:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
-csharp_style_var_elsewhere = false:warning
+# csharp_style_var_elsewhere = false:warning
 
 # Prefer property-like constructs to have an expression-body
 csharp_style_expression_bodied_properties = true:none
