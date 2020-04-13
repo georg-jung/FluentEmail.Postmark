@@ -90,6 +90,27 @@ namespace FluentEmail.Postmark.Tests
         }
 
         [Fact]
+        public void SenderNullServerToken()
+        {
+            Func<PostmarkSender> fn = () => new PostmarkSender((string)null!);
+            fn.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void OptionsNullServerToken()
+        {
+            Func<PostmarkSenderOptions> fn = () => new PostmarkSenderOptions(null!);
+            fn.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void NullOptions()
+        {
+            Func<PostmarkSender> fn = () => new PostmarkSender((PostmarkSenderOptions)null!);
+            fn.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public async Task TooManyRecipients()
         {
             Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
