@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentEmail.Postmark", "src\FluentEmail.Postmark\FluentEmail.Postmark.csproj", "{0273122B-E60B-4028-BB22-BED4D17B9724}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEmail.Postmark.Example", "FluentEmail.Postmark.Example\FluentEmail.Postmark.Example.csproj", "{B325B458-B83B-451E-B136-F1DEE3164DCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEmail.Postmark.Example", "src\FluentEmail.Postmark.Example\FluentEmail.Postmark.Example.csproj", "{B325B458-B83B-451E-B136-F1DEE3164DCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentEmail.Postmark.Tests", "src\FluentEmail.Postmark.Tests\FluentEmail.Postmark.Tests.csproj", "{23F38C86-4264-4F93-92E8-7166D891B034}"
 EndProject
