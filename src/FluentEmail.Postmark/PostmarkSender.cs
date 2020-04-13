@@ -112,8 +112,8 @@ namespace FluentEmail.Postmark
         private static SendResponse CreateSendResponse(PostmarkResponse value)
         {
             var ret = new SendResponse();
-            if (value.Status == PostmarkStatus.Success) return ret;
             ret.MessageId = value.MessageID.ToString();
+            if (value.Status == PostmarkStatus.Success) return ret;
             ret.ErrorMessages.Add(value.ErrorCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
             return ret;
         }
