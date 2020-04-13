@@ -11,4 +11,9 @@
     <PackageTags>postmark;email;razor;fluent;fluentemail</PackageTags>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentEmail.Core" Version="2.7.0" />
+    <PackageReference Include="Postmark" Version="4.3.0" />
+  </ItemGroup>
+
 </Project>
