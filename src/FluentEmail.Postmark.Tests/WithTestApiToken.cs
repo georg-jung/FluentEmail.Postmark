@@ -11,6 +11,21 @@ namespace FluentEmail.Postmark.Tests
     public class WithTestApiToken
     {
         [Fact]
+        public void SimpleMailFromCodeSync()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = Email
+                .From("john@email.com", "Postmark Sender Support")
+                .To("bob@email.com")
+                .Subject("hows it going bob")
+                .Body("yo dawg, sup?")
+                .Send();
+
+            response.Successful.Should().BeTrue();
+        }
+
+        [Fact]
         public async Task SimpleMailFromCode()
         {
             Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
@@ -22,6 +37,43 @@ namespace FluentEmail.Postmark.Tests
                 .Body("yo dawg, sup?")
                 .SendAsync()
                 .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
+            response.MessageId.Should().NotBeNullOrEmpty();
+            response.ErrorMessages.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task SimpleHtmlMailFromCode()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = await Email
+                .From("john@email.com", "Postmark Sender Support")
+                .To("bob@email.com")
+                .Subject("hows it going bob")
+                .Body("<html><body><h1>Test</h1></body></html>", true)
+                .SendAsync()
+                .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task SimpleHtmlMailWithAlternFromCode()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = await Email
+                .From("john@email.com", "Postmark Sender Support")
+                .To("bob@email.com")
+                .Subject("hows it going bob")
+                .Body("<html><body><h1>Test</h1></body></html>", true)
+                .PlaintextAlternativeBody("Test")
+                .SendAsync()
+                .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
         }
 
         [Fact]
@@ -41,6 +93,8 @@ namespace FluentEmail.Postmark.Tests
                 .Body("yo dawg, sup?")
                 .SendAsync()
                 .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
         }
 
         [Fact]
@@ -56,6 +110,8 @@ namespace FluentEmail.Postmark.Tests
                 .LowPriority()
                 .SendAsync()
                 .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
         }
 
         [Fact]
@@ -71,6 +127,8 @@ namespace FluentEmail.Postmark.Tests
                 .HighPriority()
                 .SendAsync()
                 .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
         }
 
         [Fact]
@@ -87,6 +145,8 @@ namespace FluentEmail.Postmark.Tests
                 .Header("X-Another-Random-Useless-Header", "AnotherValue")
                 .SendAsync()
                 .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
         }
 
         [Fact]
@@ -129,6 +189,23 @@ namespace FluentEmail.Postmark.Tests
 
             Func<Task> act = async () => { await mail.SendAsync().ConfigureAwait(false); };
             await act.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false);
+        }
+
+        [Fact]
+        public async Task SimpleMailWithBrokenRecipientFromCode()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = await Email
+                .From("john@email.com", "Postmark Sender Support")
+                .To("this is not an email address")
+                .Subject("hows it going bob")
+                .Body("yo dawg, sup?")
+                .SendAsync()
+                .ConfigureAwait(false);
+
+            response.Successful.Should().BeFalse();
+            response.ErrorMessages.Should().NotBeEmpty();
         }
     }
 }
