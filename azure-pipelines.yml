@@ -67,7 +67,7 @@ stages:
       displayName: Publish code coverage results to Azure DevOps
       inputs:
         codeCoverageTool: cobertura
-        summaryFileLocation: $(System.DefaultWorkingDirectory)/bin/coverage.*.cobertura.xml
+        summaryFileLocation: $(System.DefaultWorkingDirectory)/bin/**/coverage.cobertura.xml
         failIfCoverageEmpty: true
 
     # Library
