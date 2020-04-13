@@ -78,7 +78,7 @@ namespace FluentEmail.Postmark
 
             var pmHeaderEnum = (email.Data.Headers ?? Enumerable.Empty<KeyValuePair<string, string>>())
                 .Select(kvp => new PostmarkDotNet.Model.MailHeader(kvp.Key, kvp.Value));
-            pmHeaderEnum.Concat(email.Data.Priority.GetPmHeaders()); // add headers representing prio
+            pmHeaderEnum = pmHeaderEnum.Concat(email.Data.Priority.GetPmHeaders()); // add headers representing prio
             foreach (var pmh in pmHeaderEnum)
             {
                 msg.Headers.Add(pmh);
