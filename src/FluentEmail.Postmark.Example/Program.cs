@@ -6,7 +6,7 @@ namespace FluentEmail.Postmark.Example
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static async Task Main()
         {
             Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
 
