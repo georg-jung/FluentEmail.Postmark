@@ -41,7 +41,9 @@ stages:
       inputs:
         command: 'restore'
         projects: '$(solution)'
+        feedsToUse: 'select'
         includeNuGetOrg: true
+        vstsFeed: 'FluentEmail.Postmark/FluentEmail.Postmark'
         verbosityRestore: 'Detailed'
         arguments: '--locked-mode'
       displayName: 'Restore'
