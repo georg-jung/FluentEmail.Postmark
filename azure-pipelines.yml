@@ -1,0 +1,109 @@
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  SrcDir: '$(System.DefaultWorkingDirectory)/src'
+  solution: 'FluentEmail.Postmark.sln'
+  BuildConfiguration: 'Release'
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  RunTests: false
+  UseNugetCache: false
+  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
+
+stages:
+- stage: Build
+  jobs:
+  - job: Library_ExampleApp
+    displayName: 'Library & Example App'
+    steps:
+    - task: Cache@2
+      inputs:
+        key: 'nuget | "$(Agent.OS)" | **/packages.lock.json, !**/bin/**, !**/obj/**'
+        restoreKeys: |
+          nuget | "$(Agent.OS)"
+          nuget
+        path: $(NUGET_PACKAGES)
+      displayName: Cache NuGet packages
+      condition: and(succeeded(), eq(variables.UseNugetCache, true))
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: custom
+        custom: tool
+        arguments: install --tool-path . nbgv
+      displayName: Install NBGV tool
+
+    - script: nbgv cloud
+      displayName: Set Version
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: '$(solution)'
+        feedsToUse: 'select'
+        includeNuGetOrg: true
+        vstsFeed: 'FluentEmail.Postmark/FluentEmail.Postmark'
+        verbosityRestore: 'Minimal'
+        arguments: '--locked-mode'
+      displayName: 'Restore'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: build
+        projects: '$(solution)'
+        arguments: '-c $(BuildConfiguration) --no-restore'
+      displayName: 'Build'
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: '$(solution)'
+        arguments: '-c $(BuildConfiguration) --no-restore --no-build'
+      displayName: 'Test'
+      condition: and(succeeded(), eq(variables.RunTests, true))
+
+    # Library
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: pack
+        packagesToPack: '$(SrcDir)/FluentEmail.Postmark/FluentEmail.Postmark.csproj'
+        configuration: $(BuildConfiguration)
+        packDirectory: $(Build.ArtifactStagingDirectory)/Packages
+        arguments: '--no-restore --no-build'
+      displayName: 'Pack FluentEmail.Postmark'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)/Packages'
+        artifact: 'Packages'
+
+##################
+##### DEPLOY #####
+##################
+- stage: DeployPushInternalFeed
+  condition: and(succeeded(), or(startsWith(variables['build.sourceBranch'], 'refs/heads/release/'), eq(variables['build.sourceBranch'], 'refs/heads/master')))
+  displayName: 'Deploy:NuGet Push Internal Feed'
+  dependsOn: Build
+  jobs:
+  - deployment: FluentEmail.Postmark
+    environment: 'internalfeed'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            # see https://docs.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml#artifacts-in-release-and-deployment-jobs
+            # we want to download the specific artifact we need so skip auto download
+            - download: none
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                buildType: 'current'
+                artifactName: 'Packages'
+                targetPath: '$(System.DefaultWorkingDirectory)'
+            - task: DotNetCoreCLI@2
+              displayName: 'Push to Feed'
+              inputs:
+                command: 'push'
+                searchPatternPush: '$(System.DefaultWorkingDirectory)/**/*.nupkg;$(System.DefaultWorkingDirectory)/**/*.snupkg'
+                nuGetFeedType: 'internal'
+                feedPublish: 'FluentEmail.Postmark/FluentEmail.Postmark'
