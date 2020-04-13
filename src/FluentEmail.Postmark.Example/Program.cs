@@ -15,7 +15,8 @@ namespace FluentEmail.Postmark.Example
                 .To("bob@email.com")
                 .Subject("hows it going bob")
                 .Body("yo dawg, sup?")
-                .SendAsync();
+                .SendAsync()
+                .ConfigureAwait(false);
 
             var m = new ExampleModel()
             {
@@ -28,7 +29,8 @@ namespace FluentEmail.Postmark.Example
                 .To("bob@email.com", "bob")
                 .Subject("hows it going bob")
                 .UsingTemplateFromEmbedded("FluentEmail.Postmark.Example.Example.cshtml", m, typeof(Program).Assembly)
-                .SendAsync();
+                .SendAsync()
+                .ConfigureAwait(false);
         }
     }
 }

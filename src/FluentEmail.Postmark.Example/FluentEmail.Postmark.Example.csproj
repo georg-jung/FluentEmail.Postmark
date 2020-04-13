@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\FluentEmail.Postmark\FluentEmail.Postmark.csproj" />
+    <ProjectReference Include="..\FluentEmail.Postmark\FluentEmail.Postmark.csproj" />
   </ItemGroup>
 
 </Project>
