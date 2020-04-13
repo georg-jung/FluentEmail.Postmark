@@ -69,6 +69,7 @@ stages:
         codeCoverageTool: cobertura
         summaryFileLocation: $(System.DefaultWorkingDirectory)/bin/**/coverage.cobertura.xml
         failIfCoverageEmpty: true
+      condition: succeededOrFailed()
 
     # Library
     - task: DotNetCoreCLI@2
