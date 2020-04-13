@@ -190,22 +190,5 @@ namespace FluentEmail.Postmark.Tests
             Func<Task> act = async () => { await mail.SendAsync().ConfigureAwait(false); };
             await act.Should().ThrowAsync<ArgumentException>().ConfigureAwait(false);
         }
-
-        [Fact]
-        public async Task SimpleMailWithBrokenRecipientFromCode()
-        {
-            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
-
-            var response = await Email
-                .From("john@email.com", "Postmark Sender Support")
-                .To("this is not an email address")
-                .Subject("hows it going bob")
-                .Body("yo dawg, sup?")
-                .SendAsync()
-                .ConfigureAwait(false);
-
-            response.Successful.Should().BeFalse();
-            response.ErrorMessages.Should().NotBeEmpty();
-        }
     }
 }
