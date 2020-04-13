@@ -60,6 +60,30 @@ namespace FluentEmail.Postmark.Tests
         }
 
         [Fact]
+        public async Task SimpleMailWithAttachmentFromCode()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = await Email
+                .From("john@email.com", "Postmark Sender Support")
+                .To("bob@email.com")
+                .Subject("hows it going bob")
+                .Body("yo dawg, sup?")
+                .Attach(new Core.Models.Attachment()
+                {
+                    Filename = "test.txt",
+                    Data = new System.IO.MemoryStream(new byte[] { 0, 1, 2, 3, 4, 5, 6, 7 }),
+                    ContentType = "application/octet-stream"
+                })
+                .SendAsync()
+                .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
+            response.MessageId.Should().NotBeNullOrEmpty();
+            response.ErrorMessages.Should().BeEmpty();
+        }
+
+        [Fact]
         public async Task SimpleHtmlMailWithAlternFromCode()
         {
             Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
