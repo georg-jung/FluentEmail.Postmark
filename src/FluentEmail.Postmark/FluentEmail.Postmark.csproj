@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <CodeAnalysisRuleSet>..\shipping.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>Send emails with FluentEmail via Postmark.</Description>
+    <PackageId>FluentEmail.Postmark</PackageId>
+    <PackageTags>postmark;email;razor;fluent;fluentemail</PackageTags>
+  </PropertyGroup>
+
+</Project>
