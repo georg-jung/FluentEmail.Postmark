@@ -45,7 +45,7 @@ stages:
         includeNuGetOrg: true
         vstsFeed: 'FluentEmail.Postmark/FluentEmail.Postmark'
         verbosityRestore: 'Minimal'
-        arguments: '--locked-mode'
+        arguments: '--locked-mode --verbosity d'
       displayName: 'Restore'
 
     - task: DotNetCoreCLI@2
