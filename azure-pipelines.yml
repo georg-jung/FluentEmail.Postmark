@@ -86,7 +86,7 @@ stages:
   displayName: 'Deploy:NuGet Push Internal Feed'
   dependsOn: Build
   jobs:
-  - deployment: FluentEmail.Postmark
+  - deployment: FluentEmailPostmark
     environment: 'internalfeed'
     strategy:
       runOnce:
