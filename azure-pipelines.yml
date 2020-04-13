@@ -7,7 +7,7 @@ variables:
   BuildConfiguration: 'Release'
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  RunTests: false
+  RunTests: true
   UseNugetCache: false
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
 

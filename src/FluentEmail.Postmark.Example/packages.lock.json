@@ -41,6 +41,15 @@
         "resolved": "3.1.74",
         "contentHash": "9+zWRGxkeV1pNTF6g4uiNu5OZXBPY4YXEq24H1a8iWsuDqSrprNoLffA4LeIoJXhAOqb1P0aa3v7EoZakPWdaw=="
       },
+      "NETStandard.Library": {
+        "type": "Direct",
+        "requested": "[2.0.3, )",
+        "resolved": "2.0.3",
+        "contentHash": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.1.0"
+        }
+      },
       "FluentEmail.Core": {
         "type": "Transitive",
         "resolved": "2.7.0",

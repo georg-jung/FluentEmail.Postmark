@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <CodeAnalysisRuleSet>..\shipping.ruleset</CodeAnalysisRuleSet>
+
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup>
