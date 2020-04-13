@@ -59,9 +59,16 @@ stages:
       inputs:
         command: 'test'
         projects: '$(solution)'
-        arguments: '-c $(BuildConfiguration) --no-restore --no-build'
+        arguments: '/p:CollectCoverage=true -c $(BuildConfiguration) --no-restore --no-build'
       displayName: 'Test'
       condition: and(succeeded(), eq(variables.RunTests, true))
+
+    - task: PublishCodeCoverageResults@1
+      displayName: Publish code coverage results to Azure DevOps
+      inputs:
+        codeCoverageTool: cobertura
+        summaryFileLocation: $RepoRoot/bin/coverage.*.cobertura.xml
+        failIfCoverageEmpty: true
 
     # Library
     - task: DotNetCoreCLI@2
