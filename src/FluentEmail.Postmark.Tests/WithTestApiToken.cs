@@ -31,6 +31,24 @@ namespace FluentEmail.Postmark.Tests
             Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
 
             var response = await Email
+                .From("john@email.com")
+                .To("bob@email.com")
+                .Subject("hows it going bob")
+                .Body("yo dawg, sup?")
+                .SendAsync()
+                .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
+            response.MessageId.Should().NotBeNullOrEmpty();
+            response.ErrorMessages.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task SimpleMailWithNameFromCode()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = await Email
                 .From("john@email.com", "Postmark Sender Support")
                 .To("bob@email.com")
                 .Subject("hows it going bob")
@@ -191,6 +209,14 @@ namespace FluentEmail.Postmark.Tests
         public void NullOptions()
         {
             Func<PostmarkSender> fn = () => new PostmarkSender((PostmarkSenderOptions)null!);
+            fn.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SendNull()
+        {
+            var sender = new PostmarkSender("POSTMARK_API_TEST");
+            Func<Task> fn = async () => await sender.SendAsync(null!).ConfigureAwait(false);
             fn.Should().Throw<ArgumentNullException>();
         }
 
