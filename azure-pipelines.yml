@@ -44,7 +44,7 @@ stages:
         feedsToUse: 'select'
         includeNuGetOrg: true
         vstsFeed: 'FluentEmail.Postmark/FluentEmail.Postmark'
-        verbosityRestore: 'Detailed'
+        verbosityRestore: 'Minimal'
         arguments: '--locked-mode'
       displayName: 'Restore'
 
