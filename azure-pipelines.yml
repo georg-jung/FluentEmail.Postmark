@@ -41,9 +41,8 @@ stages:
       inputs:
         command: 'restore'
         projects: '$(solution)'
-        feedsToUse: 'select'
-        includeNuGetOrg: true
-        vstsFeed: 'FluentEmail.Postmark/FluentEmail.Postmark'
+        feedsToUse: 'config'
+        nugetConfigPath: 'nuget.config'
         verbosityRestore: 'Minimal'
         arguments: '--locked-mode'
       displayName: 'Restore'
