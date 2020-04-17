@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentEmail.Postmark.HostingExample.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +27,12 @@ namespace FluentEmail.Postmark.HostingExample
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddFluentEmail("from@example.com")
+                    .AddRazorRenderer()
+                    .AddPostmarkSender("POSTMARK_API_TEST");
+
+            services.AddTransient<IMailer, FluentMailer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

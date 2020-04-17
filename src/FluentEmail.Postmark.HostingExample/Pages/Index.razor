@@ -1,7 +1,49 @@
 @page "/"
 
-<h1>Hello, world!</h1>
+@using System.ComponentModel.DataAnnotations
+@using FluentEmail.Postmark.HostingExample.Services
+@inject IMailer Mailer
 
-Welcome to your new app.
+<h1>Blazor Hosting/DI Email Demo</h1>
 
+<EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <InputText @bind-Value="model.EmailAddress" class="form-control" style="max-width: 25em;" />
+    </div>
+    <div class="form-group">
+        @if (Sending)
+        {
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Sending...
+            </button>
+        }
+        else
+        {
+            <input type="submit" value="Send" class="btn btn-primary" />
+        }
+    </div>
+</EditForm>
 
+@code {
+    public class SendExampleViewModel
+    {
+        [EmailAddress]
+        [Display(Name = "Email address")]
+        public string? EmailAddress { get; set; }
+    }
+
+    bool Sending = false;
+    SendExampleViewModel model = new SendExampleViewModel();
+
+    private async Task HandleValidSubmit(EditContext context)
+    {
+        if (string.IsNullOrEmpty(model.EmailAddress))
+            return;
+        Sending = true;
+        await Mailer.SendExample(model.EmailAddress);
+        Sending = false;
+    }
+}
