@@ -28,9 +28,20 @@ namespace FluentEmail.Postmark.HostingExample
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            var postmarkConf = Configuration
+                .GetSection("FluentEmailPostmark")
+                .Get<PostmarkSenderOptions>();
+
+            services.AddFluentEmail("from@example.com")
+                    .AddRazorRenderer()
+                    .AddPostmarkSender(postmarkConf);
+
+            // alternatively like this:
+            /*
             services.AddFluentEmail("from@example.com")
                     .AddRazorRenderer()
                     .AddPostmarkSender("POSTMARK_API_TEST");
+            */
 
             services.AddTransient<IMailer, FluentMailer>();
         }
