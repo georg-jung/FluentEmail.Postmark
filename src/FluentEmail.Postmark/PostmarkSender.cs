@@ -33,6 +33,8 @@ namespace FluentEmail.Postmark
         public PostmarkSender(PostmarkSenderOptions options)
         {
             this.options = options ?? throw new ArgumentNullException(nameof(options));
+            if (string.IsNullOrWhiteSpace(options.ServerToken))
+                throw new ArgumentException("The ServerToken property of the given options is null or whitespace but it is required to be set to a valid value.", nameof(options.ServerToken));
         }
 
         /// <summary>

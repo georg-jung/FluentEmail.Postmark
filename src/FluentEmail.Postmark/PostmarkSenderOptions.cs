@@ -14,6 +14,13 @@ namespace FluentEmail.Postmark
         /// <summary>
         /// Creates a new instance of the PostmarkSenderOptions class.
         /// </summary>
+        public PostmarkSenderOptions()
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of the PostmarkSenderOptions class.
+        /// </summary>
         /// <param name="serverToken">The serverToken to use to authenticate at the Postmark API.</param>
         public PostmarkSenderOptions(string serverToken)
         {
@@ -23,7 +30,7 @@ namespace FluentEmail.Postmark
         /// <summary>
         /// Sending requires server level privileges. This token can be found on the API Tokens tab under your Postmark server.
         /// </summary>
-        public string ServerToken { get; }
+        public string ServerToken { get; set; }
 
         /// <summary>
         /// Activate open tracking for this email.
