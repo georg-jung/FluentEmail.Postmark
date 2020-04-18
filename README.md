@@ -28,11 +28,11 @@ For more examples see the examples of FluentEmail itself or check the [basic exa
 
 ## Real world usage
 
-* in ASP.NET Core
+* in ASP.NET Core 3.1
 * with DI
 * with Razor templates
 
-The FluentEmail package itself is slightly outdated, so the following steps are required to get up and running with a modern project. Hopefully the situation will [change soon](https://github.com/lukencode/FluentEmail/pull/186), so that this is more straight forward.
+The FluentEmail package itself is slightly outdated, so the following steps are required to get up and running with a modern 3.x project. Hopefully the situation will [change soon](https://github.com/lukencode/FluentEmail/pull/186), so that this is more straight forward.
 
 A complete project that's set up like the following steps describe can be found under [FluentEmail.Postmark.HostingExample](src/FluentEmail.Postmark.HostingExample).
 
