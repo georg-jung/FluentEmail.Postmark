@@ -36,13 +36,16 @@ The FluentEmail package itself is slightly outdated, so the following steps are 
 
 A complete project that's set up like the following steps describe can be found under [FluentEmail.Postmark.HostingExample](src/FluentEmail.Postmark.HostingExample).
 
-1. Add this myget feed as a nuget source to get an up-to-date version of FluentEmail:
-    * https://www.myget.org/F/fluentemail/api/v3/index.json
-    * you can use the [nuget.config](nuget.config) file from this repo too
+1. Add this feed to your nuget.config to get an up-to-date version of FLuentEmail.Razor:
+    * https://pkgs.dev.azure.com/georg-jung/FluentEmail.Postmark/_packaging/FluentEmail.Razor/nuget/v3/index.json
+    * see the [nuget.config](nuget.config) file from this repo for an example how this works
+    * this basically let's you use nuget.org as normal but adds this one package, as this feed is built just for the sole purpose of providing this one package
+    * alternatively you could add the following myget feed of the creator of the up-to-date version instead but this can lead to issues with restoring packages in locked mode
+      * https://www.myget.org/F/fluentemail/api/v3/index.json
 2. Install dependencies
 
     ```powershell
-    PM> Install-Package FluentEmail.Razor -Version 2.8.0 # 2.8 is only available in myget
+    PM> Install-Package FluentEmail.Razor -Version 2.8.0 # 2.8 is only available in this projects vsts feed/by manual download/other custom feeds
     PM> Install-Package RazorLight -Version 2.0.0-beta7  # install manually to get the most up to date version
     PM> Install-Package Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation -Version 3.1.3 # runtime exceptions will be thrown if this is not installed
     PM> Install-Package FluentEmail.Postmark # just get the most recent version from nuget
