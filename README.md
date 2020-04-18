@@ -36,7 +36,7 @@ The FluentEmail package itself is slightly outdated, so the following steps are 
 
 A complete project that's set up like the following steps describe can be found under [FluentEmail.Postmark.HostingExample](src/FluentEmail.Postmark.HostingExample).
 
-1. Add this feed to your nuget.config to get an up-to-date version of FLuentEmail.Razor:
+1. Add this feed to your nuget.config to get an up-to-date version of FluentEmail.Razor:
     * https://pkgs.dev.azure.com/georg-jung/FluentEmail.Postmark/_packaging/FluentEmail.Razor/nuget/v3/index.json
     * see the [nuget.config](nuget.config) file from this repo for an example how this works
     * this basically let's you use nuget.org as normal but adds this one package, as this feed is built just for the sole purpose of providing this one package
