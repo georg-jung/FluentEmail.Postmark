@@ -98,7 +98,8 @@ A complete project that's set up like the following steps describe can be found 
     "FluentEmailPostmark": {
         "ServerToken": "POSTMARK_API_TEST",
         "TrackOpens": false,
-        "TrackLinks": "HtmlOnly", // None = 0, HtmlAndText = 1, HtmlOnly = 2, TextOnly = 3
+        // None = 0, HtmlAndText = 1, HtmlOnly = 2, TextOnly = 3
+        "TrackLinks": "HtmlOnly",
         "Tag": "aspnetcore",
         "Metadata": {
         "demo": "debug"
