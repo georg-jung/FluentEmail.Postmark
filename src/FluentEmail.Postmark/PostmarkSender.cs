@@ -74,6 +74,7 @@ namespace FluentEmail.Postmark
                 To = email.Data.ToAddresses.ToPmAddressString(),
                 Cc = email.Data.CcAddresses.ToPmAddressString(),
                 Bcc = email.Data.BccAddresses.ToPmAddressString(),
+                ReplyTo = email.Data.ReplyToAddresses.ToPmAddressString(),
 
                 Subject = email.Data.Subject
             };
