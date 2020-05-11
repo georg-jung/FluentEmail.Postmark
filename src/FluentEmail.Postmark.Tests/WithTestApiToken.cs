@@ -44,6 +44,25 @@ namespace FluentEmail.Postmark.Tests
         }
 
         [Fact]
+        public async Task SimpleMailReplyTo()
+        {
+            Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
+
+            var response = await Email
+                .From("john@email.com")
+                .To("bob@email.com")
+                .ReplyTo("john+hashcode@email.com")
+                .Subject("hows it going bob")
+                .Body("yo dawg, sup?")
+                .SendAsync()
+                .ConfigureAwait(false);
+
+            response.Successful.Should().BeTrue();
+            response.MessageId.Should().NotBeNullOrEmpty();
+            response.ErrorMessages.Should().BeEmpty();
+        }
+
+        [Fact]
         public async Task SimpleMailWithNameFromCode()
         {
             Email.DefaultSender = new PostmarkSender("POSTMARK_API_TEST");
